@@ -22,10 +22,14 @@ void linkedListStackPush(struct linkedListStack *s, TYPE d) {
 	struct link * newLink = (struct link *) malloc(sizeof(struct link));
 	assert(newLink != 0);
 
-	/* Fix me */
-	newLink->value = d;
-	newLink->next = s->firstLink;
-	s->firstLink = newLink;
+		//add value to the new link
+   newLink->value = d;
+  
+  		//connect the link to the stack
+   newLink->next = s->fistLink;
+  
+  		//redirect the first link pointer to the new head
+   s->firstLink = newLink;
 }
 
 TYPE linkedListStackTop(struct linkedListStack *s) {
@@ -35,27 +39,31 @@ TYPE linkedListStackTop(struct linkedListStack *s) {
 }
 
 void linkedListStackPop(struct linkedListStack *s) {
-	/* Fix me */
-	/*Assign the firstLink to a link to be deleted.*/
-	struct link * tempLink = s->firstLink;
-	/*Check whether or not the linked list is empty.*/
 	assert(!linkedListStackIsEmpty(s));
-	/*If the list is not empty, change the pointer of the first link.*/
-	s->firstLink = tempLink->next;
-	/*Free the memory of the deleted link.*/
-	free(tempLink);
+			//store the new head address
+	struct link* tempPtr;
+	tempPtr = s->fistLink->next;
+  		
+  		//free the old head memory
+  	free(s->firstLink);
+  		
+  		//point to the new head
+  	s->firstLink = tempPtr;
+  
+ 		//set temp to null
+  	tempPtr = 0;
 }
 
 int linkedListStackIsEmpty(struct linkedListStack *s) {
-	/* Fix me */
-	//assert(s->firstLink != 0);
 	return s->firstLink == 0;
 }
 
 
 void linkedListStackFree(struct linkedListStack *s)
 {
-	while (!linkedListStackIsEmpty(s)) linkedListStackPop(s);
+	while (!linkedListStackIsEmpty(s)) {
+        linkedListStackPop(s);
+    }
 }
 
 int main() {

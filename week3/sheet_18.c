@@ -143,6 +143,5 @@ int listQueueIsEmpty (struct listQueue *q) {
     } else {
       return 0;
     }
-
 }
 
