@@ -142,7 +142,7 @@ TYPE getDynArr (struct DynArr * da, int position) {
 	return da->data(position);			// Return statement.
 }
 
-void putDynArr(struct DynArr * da, int position, TYPEvalue) {
+void putDynArr(struct DynArr * da, int position, TYPE value) {
 	assert(position >= 0 && position < da->size);	// Check for legal position.
 	da->data[position] = value;
 }
