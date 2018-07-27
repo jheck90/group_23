@@ -101,35 +101,29 @@ Complete the implementation of the AVLtree abstraction by writing the methods to
 struct AVLnode * _rotateLeft (struct AVLnode * current) {
 
         //move right child of old top (new top) to top 
-            current->lch
-        //move old top to left child of new top
+            struct AVLnode* newTop = current->right;
+
         //move left child of new top to right child of old top 
+            current->right = newTop->left;
 
-
-
-
-
-
-
-
-
-
-
+        //move old top to left child of new top
+            newTop->left = current;
+        //return the new top
+            return newTop;
 }
 
 struct AVLnode * _rotateRight (struct AVLnode * current) {
 
-        //move right child of old top (new top) to top 
-        //move old top to right child of new top
+        //move left child of old top (new top) to top
+            struct AVLnode* newTop = current->left;
+
         //move right child of new top to left child of old top 
+            current->left = newTop->right;
 
-
-
-
-
-
-
-
+        //move old top to right child of new top
+           newTop->left = current;
+          //return the new top
+          return newTop; 
 
 }
 
@@ -167,19 +161,6 @@ struct AVLNode *temp;
 
 
 struct AVLNode *_removeNode(struct AVLNode *cur, TYPE val) {
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
