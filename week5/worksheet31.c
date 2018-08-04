@@ -161,13 +161,16 @@ struct AVLNode *temp;
 
 
 struct AVLNode *_removeNode(struct AVLNode *cur, TYPE val) {
-
-
-
-
-
-
-
-
-
+		//base case
+	if (cur->val == val) {
+	         //replace node with the leftmost value in right subtree
+	      cur->val = _leftMost(cur->right);
+	      _removeLeftMost(cur->right);
+	      //recursive case
+	}  else if (LT(val, cur->val)) { 
+	      cur->left = _removeNode(cur->left, val);
+	}   else {
+             cur->right = _removeNode(cur->right, val);
+	} 
+	   return balance(cur); 
 }
