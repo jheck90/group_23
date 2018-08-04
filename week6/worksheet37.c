@@ -8,28 +8,11 @@ In chapter 12 you learned about the idea of hashing. To hash a value means to co
  
 The first technique you will explore is termed open-address hashing.  Here all elements are stored in a single large table. Positions that are not yet filled are given a null value. An eight-element table using Amy’s algorithm would look like the following:
 
-
-
-
-
 Notice that the table size is different, and so the index values are also different. The letters at the top show characters that hash into the indicated locations. If Anne now joins the club, we will find that the hash value (namely, 5) is the same as for Alfred. So to find a location to store the value Anne we probe for the next free location. This means to simply move forward, position by position, until an empty location is found. In this example the next free location is at position 6.
-
-
-
-
 
 No suppose Agnes wishes to join the club. Her hash value, 6, is already filled. The probe moves forward to the next position, and when the end of the array is reached it continues with the first element, eventually finding position 1:
 
-
-
-
-
 Finally, suppose Alan wishes to join the club. He finds that his hash location, 0, is filled by Amina. The next free location is not until position 2:
-
-
-
-
-
 
 To see if a value is contained in a hash table the test value is first hashed. But just because the value is not found at the given location doesn’t mean that it is not in the table. Think about searching the table above for the value Alan, for example. Instead, an unsuccessful test must continue to probe, moving forward until either the value is found or an empty location is encountered. (We will assume that our hash table contains pointers to elements, so that an empty position is indicated by an empty pointer).
 
@@ -50,7 +33,7 @@ void initOpenHashTable (struct openHashTable * ht, int size) {
    assert (size > 0);
    ht->table = (TYPE **) malloc(size * sizeof(TYPE *));
    assert(ht->table != 0);
-   for (I = 0; I < size; i++)
+   for (i = 0; i < size; i++)
  ht->table[i] = 0; /* initialize empty */
    ht->tablesize = size;
    ht->count = 0;
@@ -73,47 +56,30 @@ _resizeOpenHashTable(ht);
       negative result from HASH  */
 
     if (idx < 0) idx += ht->tablesize;
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 int openHashTableBagContains (struct openHashTable *ht, TYPE  newValue) {
 
-int idx;
+    int idx;
 
-idx = HASH(newValue) % ht->tablesize;
+    idx = HASH(newValue) % ht->tablesize;
     if (idx < 0) idx += ht->tablesize;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
    }
 
 void _resizeOpenHashTable (struct openHashTable *ht) {
+  assert (ht != 0);
+  assert (ht->table != 0);
+    //create a new table twice the size
+  TYPE** newTable = malloc(sizeof(TYPE*) * (2 * ht->size));
+  TYPE** temp = ht->table;
+  ht->table = newTable;
+  int tempSize = ht->size;
+  ht->size *= 2;
 
+    //rehash the values
+ for(int i = 0; i < tempSize; i++) {
+    openHashTableAdd(ht,temp[i]);
+ }
+    //free old table
+  free(temp);
 }
