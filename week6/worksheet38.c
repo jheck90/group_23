@@ -92,5 +92,28 @@ void hashTableRemove (struct hashTable * ht, TYPE testElement)
 
 void resizeTable (struct hashTable *ht)
 {
+  assert(ht !=0);
 
+  //We want to free the temp;
+  struct HashTable *temp;
+  temp = ht;
+
+  struct hlink * current;
+  struct hlink * rem;
+
+  initHashTable(ht, 2 * ht->tablesize);
+
+  for(int i=0; i<ht->tablesize; i++)
+  {
+    current = ht->table[i];
+
+    while(current != 0)
+    {
+      hashTableAdd(ht, current->value);
+      rem = current;
+      current = current->next;
+      free(rem);
+    }
+  }
+  free(temp);
 }
